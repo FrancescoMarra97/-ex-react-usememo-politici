@@ -1,5 +1,6 @@
-export default function PoliticianCard({ politician }) {
-
+import React from "react"
+const PoliticianCard = React.memo(({ politician }) => {
+    console.log(`Debug: ${politician.name}`)
     return (
         <>
 
@@ -9,13 +10,15 @@ export default function PoliticianCard({ politician }) {
                         <img src={politician.image} alt="" />
                     </div>
                     <div className="card-body">
-                        <p>{politician.name}</p>
-                        <p>{politician.position}</p>
-                        <p>{politician.biography}</p>
+                        <p><strong>Nome: </strong>{politician.name}</p>
+                        <p><strong>Posizione Politica: </strong>{politician.position}</p>
+                        <p> <strong>Biografia: </strong>{politician.biography}</p>
                     </div>
                 </div>
             </div>
 
         </>
     )
-}
+})
+
+export default PoliticianCard

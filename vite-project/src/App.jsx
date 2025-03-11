@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 import PoliticianCard from './components/PoliticianCard'
 
@@ -26,12 +26,12 @@ function App() {
     }
     fetchData()
   }, [])
-  const filteredPoliticans = politicians.filter((politician) => {
-    return (
+  const filteredPoliticians = useMemo(() => {
+    return politicians.filter((politician) =>
       politician.name.toLowerCase().includes(query.toLowerCase()) ||
       politician.biography.toLowerCase().includes(query.toLowerCase())
-    )
-  })
+    );
+  }, [politicians, query])
 
   return (
     <>
@@ -45,7 +45,7 @@ function App() {
           />
         </div>
         <div className='row'>
-          {filteredPoliticans.map((politician) => (
+          {filteredPoliticians.map((politician) => (
             <PoliticianCard key={politician.id} politician={politician}></PoliticianCard>
           ))}
         </div>
