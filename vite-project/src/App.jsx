@@ -6,6 +6,7 @@ import PoliticianCard from './components/PoliticianCard'
 function App() {
 
   const [politicians, setPoliticians] = useState([])
+  const [query, setQuery] = useState("")
 
   async function fetchJson(url) {
     try {
@@ -25,13 +26,28 @@ function App() {
     }
     fetchData()
   }, [])
+  const filteredPoliticans = politicians.filter((politician) => {
+    return (
+      politician.name.toLowerCase().includes(query.toLowerCase()) ||
+      politician.biography.toLowerCase().includes(query.toLowerCase())
+    )
+  })
 
   return (
     <>
-      <h1>Politici</h1>
+      <h1 className='text-center'>Politici</h1>
       <div className='container'>
+        <div className='input-group mb-4'>
+          <input type="text" className='form-control'
+            placeholder="Cerca per nome o biografia"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </div>
         <div className='row'>
-          <PoliticianCard politicians={politicians}></PoliticianCard>
+          {filteredPoliticans.map((politician) => (
+            <PoliticianCard key={politician.id} politician={politician}></PoliticianCard>
+          ))}
         </div>
       </div>
     </>
